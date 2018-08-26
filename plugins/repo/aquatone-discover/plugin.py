@@ -38,13 +38,24 @@ class Aquatonediscover (core.PluginBase):
                 #import ipdb; ipdb.set_trace()
 		print ips
 		print len(ips)
+		
 		cantidadlist=len(ips)
+		aux_ip=""
+		host_id=None
 		while cantidadlist !=1:
-				print ips[j][0]
-				host_id=self.createAndAddHost(ips[j][0])						
-			        interface_id=self.createAndAddInterface(host_id,ips[j][0],ipv4_address=ips[j][0], hostname_resolution=ips[j][1])
-				j=j+1
-				cantidadlist=cantidadlist-1
+				
+				if (aux_ip is not ips[j][0] and str(ips[j][0]).isalpha()==False): 
+					host_id=self.createAndAddHost(ips[j][0])						
+			        	interface_id=self.createAndAddInterface(host_id,ips[j][0],ipv4_address=ips[j][0], hostname_resolution=ips[j][1])
+					aux_ip=ips[j][0]
+					j=j+1
+					cantidadlist=cantidadlist-1
+				elif (aux_ip is not ips[j][0]) :
+                                        interface_id=self.createAndAddInterface(host_id,ips[j][0],ipv4_address=ips[j][0], hostname_resolution=ips[j][1])
+                                        aux_ip=ips[j][0]
+                                        j=j+1
+                                        cantidadlist=cantidadlist-1
+					
 	def processCommandString(self, username, current_path, command_string):
         	return None
 
